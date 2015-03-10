@@ -141,4 +141,138 @@ SDROPBroadcast = {
 	[_alertMsg] call SDROP_Alert;
 };
 
+SDROPSetAIWaypoints = {
+	private ["_grp","_crate"];
+	
+	_grp = _this select 0;
+	_crate = _this select 1;
+	_cratePos = getPos _crate;
+	
+	_wpPatrolGrid = [
+		[(_cratePos select 0)+20, (_cratePos select 1), 0],
+		[(_cratePos select 0), (_cratePos select 1)+20, 0],
+		[(_cratePos select 0)-20, (_cratePos select 1), 0],
+		[(_cratePos select 0), (_cratePos select 1)-20, 0]
+	];
+	
+	for "_i" from 0 to ((count _wpPatrolGrid)-1) do {
+		_wp = _grp addWaypoint [(_wpPatrolGrid select _i), 0];
+		_wp setWaypointType "SAD";
+		_wp setWaypointBehaviour "COMBAT";
+		_wp setWaypointCompletionRadius 10;
+	};
+	
+	_cycle = _grp addWaypoint [_cratePos, 20];
+	_cycle setWaypointType "CYCLE";
+	_cycle setWaypointBehaviour "COMBAT";
+	_cycle setWaypointCompletionRadius 10;
+};
+
+SDROPLoadAIGear = {
+	private ["_unit","_isSniper","_prim","_seco","_pAmmo","_hAmmo"];
+	
+	_unit = _this select 0;
+	_isSniper = _this select 1;
+	
+	if (!isNull _unit) then {
+		removeAllWeapons _unit;
+		{_unit removeMagazine _x;} forEach (magazines _unit);
+		removeAllItems _unit;
+		removeUniform _unit;
+		removeVest _unit;
+		removeBackpack _unit;
+		removeGoggles _unit;
+		removeHeadGear _unit;
+		
+		if (_isSniper) then {
+			// Add Sniper Clothing
+			_unit forceAddUniform ("U_O_GhillieSuit");
+			_unit addHeadGear (SDROPHeadgearList call BIS_fnc_selectRandom);
+			_unit addVest (SDROPVestList call BIS_fnc_selectRandom);
+			
+			// Add Sniper Weapons & Ammo (default M104 with LR scope and ammo)
+			_prim = "srifle_LRR_SOS_F";
+			_seco = SDROPPistolsList call BIS_fnc_selectRandom;
+		} else {
+			//clothing
+			_unit forceAddUniform (SDROPUniformList call BIS_fnc_selectRandom);
+			_unit addHeadGear (SDROPHeadgearList call BIS_fnc_selectRandom);
+			_unit addVest (SDROPVestList call BIS_fnc_selectRandom);
+			
+			//weapons & Ammo
+			_prim = SDROPRiflesList call BIS_fnc_selectRandom;
+			_seco = SDROPPistolsList call BIS_fnc_selectRandom;
+		};
+		
+		// Give unit parachute
+		_unit addBackpack "B_Parachute";
+		
+		//NV Goggles for night drops
+		if (SunOrMoon < 1) then {
+			_unit addItem "NVG_EPOCH";
+			_unit assignItem "NVG_EPOCH";
+		};
+		
+		//Gotta get paid yo!
+		_kryptoAmount = floor (random 300) +1;
+		_unit setVariable ["krypto", _kryptoAmount];
+		
+		_pAmmo = [] + getArray (configFile >> "cfgWeapons" >> _prim >> "magazines");
+		{
+			if (isClass(configFile >> "CfgPricing" >> _x)) exitWith {
+				_unit addMagazine _x;
+				_unit addMagazine _x;
+			};
+		} forEach _pAmmo;
+		
+		_hAmmo = [] + getArray (configFile >> "cfgWeapons" >> _seco >> "magazines");
+		{
+			if (isClass(configFile >> "CfgPricing" >> _x)) exitWith {
+				_unit addMagazine _x;
+				_unit addMagazine _x;
+			};
+		} forEach _hAmmo;
+		
+		_unit addWeapon _prim;
+		_unit selectWeapon _prim;
+		_unit addWeapon _seco;
+
+	};
+};
+
+SDROPHeadgearList = getArray( configFile >> "sdropCfg" >> "SDROP_HeadgearList");
+
+SDROPUniformList = getArray( configFile >> "sdropCfg" >> "SDROP_UniformList");
+
+SDROPVestList = getArray( configFile >> "sdropCfg" >> "SDROP_VestList");
+
+SDROPRiflesList = getArray( configFile >> "sdropCfg" >> "SDROP_RiflesList");
+
+SDROPPistolsList = getArray( configFile >> "sdropCfg" >> "SDROP_PistolsList");
+
+// Set AI Skills
+SDROPSetUnitSkills = {
+	private ["_unit","_skillSetArray"];
+
+	_unit = _this select 0;
+	_skillSetArray = _this select 1;
+	
+	{
+		_unit setSkill [(_x select 0),(_x select 1)];
+		//diag_log text format ["[SDROP]: Skill: %1:%2", (_x select 0),(_x select 1)];
+	} forEach _skillSetArray;
+};
+
+//SkillSets - endurance removed from Arma 3
+skillsRookie = getArray( configFile >> "sdropCfg" >> "SDROP_skillsRookie");
+
+skillsVeteran =  getArray( configFile >> "sdropCfg" >> "SDROP_skillsVeteran");
+
+skillsElite = getArray( configFile >> "sdropCfg" >> "SDROP_skillsElite");
+
+if (SDROP_Debug) then {
+	diag_log text format ["[SDROP]: Functions loaded. Starting supply drop timer."];
+};
+
+
 true

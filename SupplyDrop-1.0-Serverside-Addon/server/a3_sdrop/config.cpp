@@ -22,14 +22,105 @@ class CfgFunctions {
 class sdropCfg {
 	
 	SDROP_Debug = 1;					//Set to 0 if you don't want logs added to your RPT - used mostly for testing/diagnosis of issues
+	SDROP_CreateParatrooperAI = 1;		//Set to 0 if you do NOT want AI to drop with the crate
 	SDROP_MissionTimer = 900;			//mission timer - time taken for new helicopter to arrive / conditional (default: 900, which is 15 minutes real-time)
 	SDROP_CrateTimeout = 1800;			//This is the NON-LOOTED crate cleanup timer - (default is 1800 which is half-hour real-time)
 	SDROP_SupplyDropFailChance = 0;		//Change probability of supply drop - enter chance as whole number from 1-100 (default 0)
 	SDROP_HelicopterCrashChance = 0;	//Change probability of helicopter crashing - enter chance as whole number from 1-100 (default 0)
-	SDROP_Blacklist[] = {"DemoCharge_Remote_Mag","SatchelCharge_Remote_Mag","ATMine_Range_Mag","ClaymoreDirectionalMine_Remote_Mag","APERSMine_Range_Mag","APERSBoundingMine_Range_Mag","SLAMDirectionalMine_Wire_Mag","APERSTripMine_Wire_Mag","NVG_EPOCH","NVGoggles_OPFOR","NVGoggles_INDEP","FirstAidKit","Medikit","ToolKit","optic_DMS"};
+	
+	// Crate Blacklist - These are items that should NOT be in random crate - should eliminate most BE filter issues (may need more testing)
+	SDROP_Blacklist[] = {
+		"DemoCharge_Remote_Mag",
+		"SatchelCharge_Remote_Mag",
+		"ATMine_Range_Mag",
+		"ClaymoreDirectionalMine_Remote_Mag",
+		"APERSMine_Range_Mag",
+		"APERSBoundingMine_Range_Mag",
+		"SLAMDirectionalMine_Wire_Mag",
+		"APERSTripMine_Wire_Mag",
+		"NVG_EPOCH",
+		"NVGoggles_OPFOR",
+		"NVGoggles_INDEP",
+		"FirstAidKit",
+		"Medikit",
+		"ToolKit",
+		"optic_DMS"
+	};
+	
+	SDROP_HeadgearList[] = {	
+		"H_39_EPOCH","H_40_EPOCH","H_41_EPOCH","H_42_EPOCH","H_43_EPOCH","H_44_EPOCH","H_45_EPOCH","H_46_EPOCH","H_47_EPOCH","H_48_EPOCH",
+		"H_49_EPOCH","H_50_EPOCH","H_51_EPOCH","H_52_EPOCH","H_53_EPOCH","H_54_EPOCH","H_55_EPOCH","H_56_EPOCH","H_57_EPOCH","H_58_EPOCH",
+		"H_59_EPOCH","H_60_EPOCH","H_61_EPOCH","H_62_EPOCH","H_63_EPOCH","H_64_EPOCH","H_65_EPOCH","H_66_EPOCH","H_67_EPOCH","H_68_EPOCH",
+		"H_69_EPOCH","H_70_EPOCH","H_74_EPOCH","H_75_EPOCH","H_76_EPOCH","H_77_EPOCH","H_86_EPOCH","H_87_EPOCH","H_88_EPOCH","H_89_EPOCH",
+		"H_90_EPOCH","H_91_EPOCH","H_92_EPOCH","H_Beret_blk","H_Beret_red","H_Beret_grn"
+	};
+	
+	SDROP_UniformList[] = {
+		"U_O_CombatUniform_ocamo","U_O_PilotCoveralls","U_OG_Guerilla1_1","U_OG_Guerilla2_1","U_OG_Guerilla2_3","U_IG_leader",
+		"U_OG_Guerilla3_1","U_OG_Guerilla3_2","U_OG_leader","U_C_WorkerCoveralls","U_I_CombatUniform_tshirt","U_I_OfficerUniform",
+		"U_CamoRed_uniform","U_CamoBrn_uniform","U_CamoBlue_uniform","U_Camo_uniform","U_O_CombatUniform_oucamo","U_I_CombatUniform_shortsleeve"
+	};
+	
+	SDROP_VestList[] = {
+		"V_1_EPOCH","V_2_EPOCH","V_3_EPOCH","V_4_EPOCH","V_5_EPOCH","V_6_EPOCH","V_7_EPOCH","V_8_EPOCH","V_9_EPOCH","V_10_EPOCH",
+		"V_11_EPOCH","V_12_EPOCH","V_13_EPOCH","V_14_EPOCH","V_15_EPOCH","V_16_EPOCH","V_17_EPOCH","V_18_EPOCH","V_19_EPOCH","V_20_EPOCH",
+		"V_21_EPOCH","V_22_EPOCH","V_23_EPOCH","V_24_EPOCH","V_25_EPOCH","V_26_EPOCH","V_27_EPOCH","V_28_EPOCH","V_29_EPOCH","V_30_EPOCH",
+		"V_31_EPOCH","V_32_EPOCH","V_33_EPOCH","V_34_EPOCH","V_35_EPOCH","V_36_EPOCH","V_37_EPOCH","V_38_EPOCH","V_39_EPOCH","V_40_EPOCH"
+	};
+
+	SDROP_RiflesList[] = {
+		"srifle_EBR_F","srifle_DMR_01_F","arifle_Katiba_F","arifle_Katiba_C_F","arifle_Katiba_GL_F","arifle_MXC_F","arifle_MX_F",
+		"arifle_MX_GL_F","arifle_MXM_F","arifle_SDAR_F","arifle_TRG21_F","arifle_TRG20_F","arifle_TRG21_GL_F","arifle_Mk20_F",
+		"arifle_Mk20C_F","arifle_Mk20_GL_F","arifle_Mk20_plain_F","arifle_Mk20C_plain_F","arifle_Mk20_GL_plain_F","SMG_01_F",
+		"SMG_02_F","hgun_PDW2000_F","arifle_MXM_Black_F","arifle_MX_GL_Black_F","arifle_MX_Black_F","arifle_MXC_Black_F","Rollins_F",
+		"LMG_Mk200_F","arifle_MX_SW_F","LMG_Zafir_F","arifle_MX_SW_Black_F","m249_EPOCH","m249Tan_EPOCH",
+		"m16_EPOCH","m16Red_EPOCH","M14_EPOCH","M14Grn_EPOCH","m4a3_EPOCH","AKM_EPOCH"
+	};
+
+	SDROP_PistolsList[] = {
+		"hgun_ACPC2_F","hgun_Rook40_F","hgun_P07_F","hgun_Pistol_heavy_01_F","hgun_Pistol_heavy_02_F","ruger_pistol_epoch",
+		"1911_pistol_epoch","hgun_Pistol_Signal_F"
+	};
+	
+	//SkillSets - endurance removed from Arma 3
+	SDROP_skillsRookie[] = {
+		{"aimingAccuracy",0.4},
+		{"aimingShake",0.3},
+		{"aimingSpeed",0.3},
+		{"spotDistance",0.3},
+		{"spotTime",0.3},
+		{"courage",0.4},
+		{"reloadSpeed",0.6},
+		{"commanding",0.6},
+		{"general",1.0}
+	};
+	
+	SDROP_skillsVeteran[] = {
+		{"aimingAccuracy",0.6},
+		{"aimingShake",0.6},
+		{"aimingSpeed",0.6},
+		{"spotDistance",0.6},
+		{"spotTime",0.6},
+		{"courage",0.6},
+		{"reloadSpeed",0.7},
+		{"commanding",0.8},
+		{"general",1.0}
+	};
+
+	SDROP_skillsElite[] = {
+		{"aimingAccuracy",0.8},
+		{"aimingShake",0.75},
+		{"aimingSpeed",0.7},
+		{"spotDistance",0.8},
+		{"spotTime",0.8},
+		{"courage",1.0},
+		{"reloadSpeed",0.8},
+		{"commanding",1.0},
+		{"general",1.0}
+	};
 	
 	class Default {
-		posArray[]={};coords[]={};magazines[]={};items[]={};backpacks[]={};weapons[]={};
+		posArray[]={};magazines[]={};items[]={};backpacks[]={};weapons[]={};findSafePos[]={}; 
 	};
 
 	//fill the crate with WEAPONS and AMMO
@@ -128,7 +219,7 @@ class sdropCfg {
 			{"ItemSodaMocha",2},
 			{"ItemSodaBurst",2},
 			{"FoodMeeps",2},
-			{"FootSnooter",2},
+			{"FoodSnooter",2},
 			{"FoodWalkNSons",2},
 			{"water_epoch",4},
 			{"ItemCoolerE",4},
@@ -161,15 +252,19 @@ class sdropCfg {
 	
 
 	class Chernarus:Default {
-		posArray[] = {{72.0000,8184.00,200},{15320.0,7816.00,200},{7528.00,15320.0,200},{6888.00,40.0000,200}};
-		coords[] = {{7067.50,7798.63},500,5000,30,0,10,0};
+		posArray[] = {{1909,12768,200},{12877,11649,200},{6541.9155,13697.747,200},{1570,4701,200},{11951,4749,200},{8418,7163,200}};
+		//https://community.bistudio.com/wiki/BIS_fnc_findSafePos
+		findSafePos[] = {800,3000,30,0,10,0};
 	};
 	
 	
 	
 	class Altis:Default {
 		posArray[] = {{15971.3,25950.5,200},{14727.5,3934.5,200},{26869.5,15454.5,200},{1306.16,14832.8,200}};
-		coords[] = {{7720,7671,0},500,10000,30,0,30,0};
+		//https://community.bistudio.com/wiki/BIS_fnc_findSafePos
+		findSafePos[] = {500,10000,30,0,30,0};
 	};
+	
+	
 	
 };

@@ -259,21 +259,23 @@ _crateOnGround = false;
 while {true} do {
 	if (getPosATL _crate select 2 > 30) then {
 		//attempt to smooth drop for paratroops
-		if (SDROP_CreateParatrooperAI) then {
-			{
-				_vel = velocity _x;
-				_dirTo = [_x,_crate] call bis_fnc_dirTo;
-				//if (_crate distance _x > 20) then {
-				//	_x setDir _dirTo;
-				//};
-				_x setDir _dirTo;
-				_x setVelocity [
-					(_vel select 0) + (sin _dirTo * 0.2),
-					(_vel select 1) + (cos _dirTo * 0.2),
-					(_vel select 2)
-				];
-			} forEach units _grp;
-		};
+		//commented out for performance improvements
+		
+		/*	
+			if (SDROP_CreateParatrooperAI) then {
+				{
+					_vel = velocity _x;
+					_dirTo = [_x,_crate] call bis_fnc_dirTo;
+					_x setDir _dirTo;
+					_x setVelocity [
+						(_vel select 0) + (sin _dirTo * 0.2),
+						(_vel select 1) + (cos _dirTo * 0.2),
+						(_vel select 2)
+					];
+				} forEach units _grp;
+			};
+		*/
+	
 		uiSleep 5;
 	};
 

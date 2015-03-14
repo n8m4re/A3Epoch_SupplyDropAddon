@@ -174,6 +174,11 @@ class sdropCfg {
 	//fill the crate with SUPPLIES
 	class SDROP_LoadLootSupplies:Default {
 		
+		items[] = {
+			{"Heal_EPOCH",2},
+			{"FAK",6},
+			{"Repair_EPOCH",1}
+		};
 		magazines[] = {
 		  {"CinderBlocks",8},
 		  {"jerrycan_epoch",3},
@@ -184,14 +189,11 @@ class sdropCfg {
 		  {"MortarBucket",6},
 		  {"PartPlankPack",4},
 		  {"ItemLockbox",1},
-		  {"FAK",6},
 		  {"VehicleRepair",2},
 		  {"Towelette",4},
 		  {"HeatPack",2},
 		  {"ColdPack",2},
 		  {"Pelt_EPOCH",2},
-		  {"Heal_EPOCH",2},
-		  {"Repair_EPOCH",1},
 		  {"EnergyPack",4},
 		  {"EnergyPackLg",1}
 		};

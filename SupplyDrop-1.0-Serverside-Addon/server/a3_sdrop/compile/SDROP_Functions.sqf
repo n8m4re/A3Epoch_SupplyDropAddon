@@ -33,10 +33,12 @@ SDROPLoadLootSupplies = {
 	clearItemCargoGlobal _crate;
 	
 	_magArr =  getArray(configFile >> "sdropCfg" >> "SDROP_LoadLootSupplies" >> "magazines");
+	_itemArr = getArray(configFile >> "sdropCfg" >> "SDROP_LoadLootSupplies" >> "items");
 	_weapArr = getArray(configFile >> "sdropCfg" >> "SDROP_LoadLootSupplies" >> "weapons");
 	_backArr = getArray(configFile >> "sdropCfg" >> "SDROP_LoadLootSupplies" >> "backpacks");
 	
 	{ _crate addMagazineCargoGlobal _x; } forEach (_magArr);
+	{ _crate addItemCargoGlobal _x; } forEach (_itemArr);
 	{ _crate addWeaponCargoGlobal _x; } forEach (_weapArr);
 	{ _crate addBackpackCargoGlobal _x; } forEach (_backArr);
 };

@@ -274,7 +274,7 @@ class sdropCfg {
 					{6654.8428,13953.532,200}
 		};
 		//https://community.bistudio.com/wiki/BIS_fnc_findSafePos
-		findSafePos[] = {500,1000,30,0,10,0};
+		findSafePos[] = {1000,3000,30,0,10,0};
 	};
 	
 	

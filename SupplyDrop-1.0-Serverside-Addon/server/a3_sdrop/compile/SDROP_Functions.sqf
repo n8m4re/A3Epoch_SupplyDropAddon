@@ -84,20 +84,20 @@ SDROPRandomLoot = {
 	clearBackpackCargoGlobal  _crate;
 	clearItemCargoGlobal _crate;
 	
-	SDROPLootList = [];
+
+		SDROPLootList = [];
 		// Generate Loot
 		{
 			_tmp = (getArray(_x >> 'items'));
-			for "_z" from 0 to ((count(_tmp))-1) do {
-				SDROPLootList = SDROPLootList + [((_tmp select _z) select 0)];
-			};
+			{ SDROPLootList = SDROPLootList + [ ( _x select 0 ) select 0 ]; } forEach (_tmp);
 		} forEach ("configName _x != 'Uniforms' && configName _x != 'Headgear'" configClasses (configFile >> "CfgLootTable"));
-	
+		//diag_log format ["[SDROPLootList]: %1", SDROPLootList];
+
 	_report = [];
 	// Load Random Loot Amount
 	for "_i" from 1 to ((floor(random 10)) + 10) do {
 		_var = (SDROPLootList call BIS_fnc_selectRandom);
-		
+						
 		if (!(_var in SDROPCrateBlacklist)) then {
 			switch (true) do
 			{

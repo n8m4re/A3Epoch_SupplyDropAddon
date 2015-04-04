@@ -32,16 +32,19 @@ if (_failed) then {
 
 	// ALTIS - north, south, east, west starting locations for supply helicopter
 	// these distances are all oceanic spawns
-	_posArray = getArray( configFile >> "sdropCfg" >> worldname >> "posArray");
+	_spawnPosArray = getArray( configFile >> "sdropCfg" >> worldname >> "spawnPosArray");
 	
 	//random supply helicopter spawn
-	_heliSpawnPosition = _posArray call bis_fnc_selectrandom;  
+	_heliSpawnPosition = _spawnPosArray call bis_fnc_selectrandom;  
 
 	//these variables determine a safe location for the supply crate drops
 	//using the helicopter spawn as starting point
 	_findSafePos = getArray( configFile >> "sdropCfg" >> worldname >> "findSafePos");
 	
-	_coords = ( [ _heliSpawnPosition ] + _findSafePos )  call BIS_fnc_findSafePos;
+	_dropPosArray = getArray( configFile >> "sdropCfg" >> worldname >> "dropPosArray");
+	_dropPosArray = _dropPosArray call bis_fnc_selectrandom; 
+	
+	_coords = ( [ _dropPosArray ] + _findSafePos )  call BIS_fnc_findSafePos;
 
 	uiSleep 5;
 

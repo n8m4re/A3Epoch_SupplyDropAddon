@@ -119,9 +119,8 @@ class sdropCfg {
 		{"general",1.0}
 	};
 	
-	class Default {
-		posArray[]={};magazines[]={};items[]={};backpacks[]={};weapons[]={};findSafePos[]={}; 
-	};
+	class Default {magazines[]={{"B_FieldPack_ocamo",2}};items[]={{"optic_Arco",1}};backpacks[]={{"20Rnd_762x51_Mag",4}};weapons[]={{"srifle_DMR_01_F",1}};spawnPosArray[]={{0,0,200}};findSafePos[]={{500,10000,30,0,30,0}}; dropPosArray[]={{0,0,200}};};
+
 
 	//fill the crate with WEAPONS and AMMO
 	class SDROP_LoadLootWeapons:Default {
@@ -254,7 +253,8 @@ class sdropCfg {
 	
 
 	class Chernarus:Default {
-		posArray[] = {
+		//random supply helicopter spawn
+		spawnPosArray[] = {
 			{5879.0845,11548.684,200},
 			{7896.0542,9725.6523,200},
 			{3706.9634,8639.5918,200},
@@ -273,33 +273,66 @@ class sdropCfg {
 			{2019.6909,7165.6523,200},
 			{6654.8428,13953.532,200}
 		};
+		
+		//random drop positions
+		dropPosArray[] = {
+			{3457.042,10919.945},
+			{11393.261,4881.1865},
+			{3437.8723,4823.6763},
+			{10588.132,10881.604},
+			{7022.5879,7641.7622}
+		};
+		
 		//https://community.bistudio.com/wiki/BIS_fnc_findSafePos
-		findSafePos[] = {1000,3000,30,0,10,0};
+		findSafePos[] = {500,2000,30,0,10,0};
 	};
 	
 	
 	
 	class Altis:Default {
-		posArray[] = {
+		//random supply helicopter spawn
+		spawnPosArray[] = {
 			{15971.3,25950.5,200},
 			{14727.5,3934.5,200},
 			{26869.5,15454.5,200},
 			{1306.16,14832.8,200}
 		};
+		
+		// random drop positions
+		dropPosArray[] = {
+			{10904.167,8370.4814},
+			{13597.261,18526.916},
+			{24606.84,21063.703},
+			{19795.055,9112.0254},
+			{20318.309,15811.264},
+			{7321.019,13793.316},
+			{6686.8555,19731.402}
+		};
+		
 		//https://community.bistudio.com/wiki/BIS_fnc_findSafePos
-		findSafePos[] = {500,10000,30,0,30,0};
+		findSafePos[] = {500,3000,30,0,30,0};
 	};
 
 	
 	class Bornholm:Default {
-		posArray[] = {
+		//random supply helicopter spawn
+		spawnPosArray[] = {
 			{9885.76,21958.6,200},
 			{9979.83,238.216,200},
 			{21319.8,8515.21,200},
 			{291.794,8532.42,200}
 		};
+		
+		//random drop positions
+		dropPosArray[] = {
+			{6858.606,6749.9946},
+			{13503.25,4236.4399},
+			{5346.7422,12928.046},
+			{11983.059,10203.342}
+		};
+		
 		//https://community.bistudio.com/wiki/BIS_fnc_findSafePos
-		findSafePos[] = {500,10000,30,0,30,0};
+		findSafePos[] = {500,3000,30,0,30,0};
 	};
 	
 	

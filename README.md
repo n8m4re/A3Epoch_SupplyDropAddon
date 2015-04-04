@@ -8,7 +8,7 @@
 3. open the "init.sqf" inside of the "mpmissions/epoch.mapname" folder, if not exist then create an new file with an editor like "notepad++" and name it to "init.sqf"
 
 example for the "init.sqf"
-
+```
 // stop server loading the client script
 // tutorial: http://killzonekid.com/arma-scripting-tutorials-basic-multiplayer-coding-summary/  
 if (isDedicated) exitWith {}; 
@@ -22,7 +22,7 @@ waitUntil{(isPlayer player) && (alive player) && !isNil "EPOCH_loadingScreenDone
 // Starts running the script
 // https://community.bistudio.com/wiki/spawn
 [] spawn sdropClient;
-
+```
 
 
 

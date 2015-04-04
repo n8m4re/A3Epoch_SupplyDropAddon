@@ -18,6 +18,9 @@ if (isDedicated) exitWith {};
 sdropClient=compileFinal preprocessFileLineNumbers "sdropClient.sqf";
 
 // wait client is ready 
+// https://community.bistudio.com/wiki/waitUntil
+// https://community.bistudio.com/wiki/isPlayer
+// https://community.bistudio.com/wiki/alive
 waitUntil{(isPlayer player) && (alive player) && !isNil "EPOCH_loadingScreenDone"};
 
 // Starts running the script

@@ -14,6 +14,7 @@ example for the "init.sqf"
 if (isDedicated) exitWith {}; 
 
 // compile the script on mission load
+// https://community.bistudio.com/wiki/compileFinal
 sdropClient=compileFinal preprocessFileLineNumbers "sdropClient.sqf";
 
 // wait client is ready 
